@@ -21,4 +21,9 @@ export const tokens: TokenFarm[] = [
     token:
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNBZGRyZXNzIjoiMHhmZTY3ZjAxN2NmYTM1NmRiYjk3ZGFlYzFhMzEyNmM1YjU5MWU3Y2M2IiwibG9naW5UaW1lIjoxNjMyNTA1NDc3MjI4LCJjcmVhdGVEYXRlIjoiMjAyMS0wOS0xMiAxOTo0MDozMyIsImlhdCI6MTYzMjUwNTQ3N30.R2r1ijHfeua0DCaO8EfcVMBZSqLKSfwVlm_drfcVRO0',
   },
+  {
+    name: 'Madre',
+    token:
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwdWJsaWNBZGRyZXNzIjoiMHhkOTFhZTFmZWY0M2E5Mjk0MGY0ZWM1NDMwMGM5MjRjMTgxMjRjYjlmIiwibG9naW5UaW1lIjoxNjMyOTQyODE4OTA3LCJjcmVhdGVEYXRlIjoiMjAyMS0wOS0wNyAwMzo0NzoyOSIsImlhdCI6MTYzMjk0MjgxOH0.l-bZiLi9TUsrLwp8vllxug_lBMAkyupkGUT3AmYAlhs',
+  },
 ];

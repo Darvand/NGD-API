@@ -1,10 +1,12 @@
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tokens } from './constants/tokens';
 import { FarmData } from './interfaces/pvu.interfaces';
 import { PvuService } from './pvu.service';
 import { DateTime, Interval } from 'luxon';
+import { farmMocked } from './mocks/farm';
+import { PVUFarmDTO } from './pvu.dto';
 
 const farmMapper = (farm: FarmData) => {
   const harvestDateTime = DateTime.fromISO(farm.harvestTime.toString());
@@ -32,10 +34,11 @@ const farmMapper = (farm: FarmData) => {
 export class PvuController {
   constructor(private readonly pvuService: PvuService) {}
 
-  @Get('/farm')
-  getFarm() {
+  @Post('/farm')
+  getFarm(@Body() pvuFarmDto: PVUFarmDTO) {
+    // return farmMocked;
     return forkJoin(
-      tokens.map((tokenFarm) =>
+      pvuFarmDto.farmData.map((tokenFarm) =>
         this.pvuService.getFarm(tokenFarm.token).pipe(
           map((farmResponse) => ({
             name: tokenFarm.name,
@@ -48,10 +51,11 @@ export class PvuController {
 
   @Get('/price')
   getPrice() {
-    return this.pvuService
-      .getPvuPrice()
-      .pipe(
-        map((coinMarketResponse) => coinMarketResponse.data.quote.USD.price),
-      );
+    // return { price: 3.50923314080297 };
+    return this.pvuService.getPvuPrice().pipe(
+      map((coinMarketResponse) => ({
+        price: coinMarketResponse.data.quote.USD.price,
+      })),
+    );
   }
 }
