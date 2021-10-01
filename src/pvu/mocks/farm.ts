@@ -8,7 +8,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Oct 8, 2021, 10:50 PM',
+        harvestTime: 1633288879780,
         timeStoped: 13.372561666666684,
         plant: {
           production: {
@@ -26,7 +26,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 2:05 PM',
+        harvestTime: 1633288879780,
         timeStoped: 3.576253611111099,
         plant: {
           element: null,
@@ -44,7 +44,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 2:29 AM',
+        harvestTime: 1633119611000,
         timeStoped: 5.884535,
         plant: {
           element: null,
@@ -62,7 +62,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 29, 2021, 9:06 PM',
+        harvestTime: 1633094411000,
         timeStoped: 0,
         plant: {
           element: null,
@@ -80,7 +80,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 3:51 PM',
+        harvestTime: 1633288879780,
         timeStoped: 1.980815833333338,
         plant: {
           element: null,
@@ -98,7 +98,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 8:06 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -121,7 +121,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Oct 2, 2021, 7:25 AM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           production: {
@@ -139,7 +139,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 29, 2021, 8:41 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -157,7 +157,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 11:51 AM',
+        harvestTime: 1633288879780,
         timeStoped: 3.3355433333333337,
         plant: {
           element: null,
@@ -175,7 +175,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: true,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 8:31 AM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -193,7 +193,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: true,
-        harvestTime: 'Sep 30, 2021, 3:48 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -211,7 +211,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Oct 3, 2021, 4:28 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -234,7 +234,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 7:21 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0.5462497222222282,
         plant: {
           production: {
@@ -252,7 +252,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 29, 2021, 8:46 AM',
+        harvestTime: 1633288879780,
         timeStoped: 1.87114861111111,
         plant: {
           element: null,
@@ -270,7 +270,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Oct 2, 2021, 8:43 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -288,7 +288,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 2:45 AM',
+        harvestTime: 1633288879780,
         timeStoped: 3.5883647222222237,
         plant: {
           element: null,
@@ -306,7 +306,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 12:53 PM',
+        harvestTime: 1633288879780,
         timeStoped: 2.198628333333332,
         plant: {
           element: null,
@@ -323,8 +323,8 @@ export const farmMocked: Farm[] = [
       {
         needWater: false,
         hasSeed: false,
-        hasCrow: false,
-        harvestTime: 'Oct 1, 2021, 8:33 AM',
+        hasCrow: true,
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -347,7 +347,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Oct 3, 2021, 8:58 PM',
+        harvestTime: 1633288879780,
         timeStoped: 2.558245277777786,
         plant: {
           production: {
@@ -365,7 +365,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 3:16 AM',
+        harvestTime: 1633288879780,
         timeStoped: 4.10823805555556,
         plant: {
           element: null,
@@ -383,7 +383,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 12:39 AM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -401,7 +401,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 8:30 AM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,
@@ -419,7 +419,7 @@ export const farmMocked: Farm[] = [
         needWater: false,
         hasSeed: false,
         hasCrow: false,
-        harvestTime: 'Sep 30, 2021, 3:38 PM',
+        harvestTime: 1633288879780,
         timeStoped: 0,
         plant: {
           element: null,

@@ -16,7 +16,7 @@ export interface Data {
   needWater: boolean;
   hasSeed: boolean;
   hasCrow: boolean;
-  harvestTime: string;
+  harvestTime: number;
   timeStoped: number;
   plant: Plant;
 }

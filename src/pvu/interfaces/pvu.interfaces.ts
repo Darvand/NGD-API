@@ -94,6 +94,7 @@ export interface FarmData {
   hasSynergy: boolean;
   needWater: boolean;
   hasSeed: boolean;
+  hasCrow?: boolean;
   pausedTime?: any;
   inGreenhouse: boolean;
   count: number;

@@ -11,12 +11,12 @@ import { PVUFarmDTO } from './pvu.dto';
 const farmMapper = (farm: FarmData) => {
   const harvestDateTime = DateTime.fromISO(farm.harvestTime.toString());
   const startDateTime = DateTime.fromISO(farm.startTime.toString());
-  const time = harvestDateTime.toLocaleString(DateTime.DATETIME_MED);
+  const time = harvestDateTime.toMillis();
   const difference = Interval.fromDateTimes(startDateTime, harvestDateTime);
   return {
     needWater: farm.needWater,
     hasSeed: farm.hasSeed,
-    hasCrow: !!farm.pausedTime,
+    hasCrow: farm.hasCrow,
     harvestTime: time,
     timeStoped: difference.length('hours') - farm.rate.hours,
     plant: {
@@ -36,7 +36,7 @@ export class PvuController {
 
   @Post('/farm')
   getFarm(@Body() pvuFarmDto: PVUFarmDTO) {
-    // return farmMocked;
+    return farmMocked;
     return forkJoin(
       pvuFarmDto.farmData.map((tokenFarm) =>
         this.pvuService.getFarm(tokenFarm.token).pipe(
@@ -51,7 +51,7 @@ export class PvuController {
 
   @Get('/price')
   getPrice() {
-    // return { price: 3.50923314080297 };
+    return { price: 3.50923314080297 };
     return this.pvuService.getPvuPrice().pipe(
       map((coinMarketResponse) => ({
         price: coinMarketResponse.data.quote.USD.price,
