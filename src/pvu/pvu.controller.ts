@@ -36,7 +36,7 @@ export class PvuController {
 
   @Post('/farm')
   getFarm(@Body() pvuFarmDto: PVUFarmDTO) {
-    return farmMocked;
+    // return farmMocked;
     return forkJoin(
       pvuFarmDto.farmData.map((tokenFarm) =>
         this.pvuService.getFarm(tokenFarm.token).pipe(
@@ -51,7 +51,7 @@ export class PvuController {
 
   @Get('/price')
   getPrice() {
-    return { price: 3.50923314080297 };
+    // return { price: 3.50923314080297 };
     return this.pvuService.getPvuPrice().pipe(
       map((coinMarketResponse) => ({
         price: coinMarketResponse.data.quote.USD.price,
