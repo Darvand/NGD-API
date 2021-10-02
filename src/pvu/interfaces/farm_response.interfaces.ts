@@ -16,16 +16,16 @@ export interface Stats {
 }
 
 export interface Synergy {
-  requirement: number;
-  description: string;
+  requirement?: number;
+  description?: string;
 }
 
 export interface Plant {
   farmConfig: FarmConfig;
-  stats: Stats;
+  stats?: Stats;
   type: number;
   iconUrl: string;
-  rarity: number;
+  rarity?: number;
   synergy: Synergy;
   sunflowerId?: number;
 }
@@ -63,8 +63,8 @@ export interface ActiveTool {
   id: number;
   type: string;
   duration: number;
-  endTime: Date;
-  startTime: Date;
+  endTime: string;
+  startTime: string;
 }
 
 export interface Rate {
@@ -81,16 +81,16 @@ export interface FarmData {
   ownerId: string;
   landId: number;
   plantId: number;
-  plantUnitId: number;
+  plantUnitId?: number;
   plantType: number;
-  plantElement: string;
+  plantElement?: string;
   activeTools: ActiveTool[];
-  createdAt: Date;
-  updatedAt: Date;
+  createdAt: string;
+  updatedAt: string;
   __v: number;
-  harvestTime: Date;
+  harvestTime: string;
   rate: Rate;
-  startTime: Date;
+  startTime: string;
   hasSynergy: boolean;
   needWater: boolean;
   hasSeed: boolean;

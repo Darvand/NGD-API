@@ -2,7 +2,7 @@ import { Body, Controller, Get, Post } from '@nestjs/common';
 import { forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tokens } from './constants/tokens';
-import { FarmData } from './interfaces/pvu.interfaces';
+import { FarmData } from './interfaces/farm_response.interfaces';
 import { PvuService } from './pvu.service';
 import { DateTime, Interval } from 'luxon';
 import { farmMocked } from './mocks/farm';
@@ -36,6 +36,7 @@ export class PvuController {
 
   @Post('/farm')
   getFarm(@Body() pvuFarmDto: PVUFarmDTO) {
+    if (!pvuFarmDto.farmData.length) return [];
     // return farmMocked;
     return forkJoin(
       pvuFarmDto.farmData.map((tokenFarm) =>

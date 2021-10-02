@@ -1,7 +1,7 @@
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import { FarmResponse } from './interfaces/pvu.interfaces';
+import { FarmResponse } from './interfaces/farm_response.interfaces';
 import { map } from 'rxjs/operators';
 import { CoinMarketResponse } from './constants/coin_market';
 
@@ -11,6 +11,9 @@ const buildRequest = (token: string) => ({
     'user-agent':
       'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/92.0.4515.131 Safari/537.36 OPR/78.0.4093.186',
     authorization: `Bearer Token: ${token}`,
+    origin: 'https://marketplace.plantvsundead.com',
+    referer: 'https://marketplace.plantvsundead.com/',
+    authority: 'backend-farm.plantvsundead.com',
   },
 });
 
@@ -22,6 +25,15 @@ export class PvuService {
     return this.httpService
       .get<FarmResponse>(
         'https://backend-farm.plantvsundead.com/farms',
+        buildRequest(token),
+      )
+      .pipe(map((axiosResponse) => axiosResponse.data));
+  }
+
+  getFarmStats(token: string): Observable<FarmResponse> {
+    return this.httpService
+      .get<FarmResponse>(
+        'https://backend-farm.plantvsundead.com/farming-stats ',
         buildRequest(token),
       )
       .pipe(map((axiosResponse) => axiosResponse.data));
