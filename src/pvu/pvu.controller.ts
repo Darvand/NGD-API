@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post } from '@nestjs/common';
-import { forkJoin } from 'rxjs';
+import { combineLatest, forkJoin } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { tokens } from './constants/tokens';
 import { FarmData } from './interfaces/farm_response.interfaces';
@@ -40,10 +40,17 @@ export class PvuController {
     // return farmMocked;
     return forkJoin(
       pvuFarmDto.farmData.map((tokenFarm) =>
-        this.pvuService.getFarm(tokenFarm.token).pipe(
-          map((farmResponse) => ({
+        combineLatest([
+          this.pvuService.getFarm(tokenFarm.token),
+          this.pvuService.getFarmStats(tokenFarm.token),
+        ]).pipe(
+          map(([farmResponse, farmStatsResponse]) => ({
             name: tokenFarm.name,
             data: farmResponse.data.map(farmMapper),
+            stats: this.pvuService.calculateFarmStats(
+              farmResponse,
+              farmStatsResponse,
+            ),
           })),
         ),
       ),

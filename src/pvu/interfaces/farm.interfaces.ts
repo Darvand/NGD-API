@@ -25,3 +25,10 @@ export interface Farm {
   name: string;
   data: Data[];
 }
+
+export interface FutureFarm {
+  currentLE: number;
+  currentSunflower: number;
+  stimatedDays: number;
+  stimatedHours: number;
+}

@@ -4,6 +4,11 @@ import { Observable } from 'rxjs';
 import { FarmResponse } from './interfaces/farm_response.interfaces';
 import { map } from 'rxjs/operators';
 import { CoinMarketResponse } from './constants/coin_market';
+import { FarmStatsResponse } from './interfaces/farm_stats_response.interface';
+import { FutureFarm } from './interfaces/farm.interfaces';
+import { DateTime, Interval } from 'luxon';
+import { LE_TO_PVU, PVU_TO_SEED } from './constants/pvu.constant';
+import { farmStatsStub, farmStub } from './stubs/api.stub';
 
 const buildRequest = (token: string) => ({
   headers: {
@@ -17,11 +22,27 @@ const buildRequest = (token: string) => ({
   },
 });
 
+const calculateLE = (isSunflower: boolean, type: number, le: number) => {
+  if (isSunflower && type === 2) {
+    return le - 250;
+  } else if (isSunflower) {
+    return le - 150;
+  } else {
+    return le;
+  }
+};
+
 @Injectable()
 export class PvuService {
   constructor(private httpService: HttpService) {}
 
   getFarm(token: string): Observable<FarmResponse> {
+    if (process.env.NODE_ENV === 'dev') {
+      return new Observable((suscriber) => {
+        suscriber.next(farmStub);
+        suscriber.complete();
+      });
+    }
     return this.httpService
       .get<FarmResponse>(
         'https://backend-farm.plantvsundead.com/farms',
@@ -30,9 +51,15 @@ export class PvuService {
       .pipe(map((axiosResponse) => axiosResponse.data));
   }
 
-  getFarmStats(token: string): Observable<FarmResponse> {
+  getFarmStats(token: string): Observable<FarmStatsResponse> {
+    if (process.env.NODE_ENV === 'dev') {
+      return new Observable((suscriber) => {
+        suscriber.next(farmStatsStub);
+        suscriber.complete();
+      });
+    }
     return this.httpService
-      .get<FarmResponse>(
+      .get<FarmStatsResponse>(
         'https://backend-farm.plantvsundead.com/farming-stats ',
         buildRequest(token),
       )
@@ -50,5 +77,44 @@ export class PvuService {
         },
       )
       .pipe(map((axiosResponse) => axiosResponse.data));
+  }
+
+  calculateFarmStats(
+    farm: FarmResponse,
+    farmStats: FarmStatsResponse,
+  ): FutureFarm {
+    const plants = farm.data.map((plant) => {
+      const startTime = DateTime.fromISO(plant.startTime);
+      const actualHours = Interval.fromDateTimes(startTime, DateTime.now());
+      return {
+        le: calculateLE(plant.isTempPlant, plant.plantType, plant.rate.le),
+        hours: plant.rate.hours,
+        harvestTimes: 1,
+        actualHours: plant.totalHarvest
+          ? 0
+          : Math.ceil(actualHours.length('hours')),
+      };
+    });
+    let totalLEHarvested =
+      farmStats.data.leWallet + farmStats.data.usagesSunflower * 100;
+    const leToSeed = 10000 + LE_TO_PVU * PVU_TO_SEED * 1.05;
+    let hoursPassed = 0;
+    while (totalLEHarvested <= leToSeed) {
+      plants.forEach((plant) => {
+        const hours =
+          plant.harvestTimes === 1 ? plant.actualHours : plant.hours;
+        if (hoursPassed === hours * plant.harvestTimes) {
+          totalLEHarvested += plant.le;
+          plant.harvestTimes++;
+        }
+      });
+      hoursPassed++;
+    }
+    return {
+      currentLE: farmStats.data.leWallet,
+      currentSunflower: farmStats.data.usagesSunflower,
+      stimatedDays: Math.floor(hoursPassed / 24),
+      stimatedHours: hoursPassed,
+    };
   }
 }
