@@ -29,6 +29,13 @@ export interface Farm {
 export interface FutureFarm {
   currentLE: number;
   currentSunflower: number;
-  stimatedDays: number;
-  stimatedHours: number;
+  stimatedHoursIncludingPVU: number;
+  stimatedHoursNotIncludingPVU: number;
+}
+
+export interface PlantCalculation {
+  le: number;
+  hours: number;
+  harvestTimes: number;
+  actualHours: number;
 }

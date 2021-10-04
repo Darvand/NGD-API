@@ -1,2 +1,9 @@
 export const LE_TO_PVU = 550;
 export const PVU_TO_SEED = 4;
+export const SUNFLOWER_MAMA_LE = 200;
+export const SUNFLOWER_SAPPLING_LE = 100;
+export const POT_LE = 50;
+export const BIG_POT_LE = 100;
+export const MOTHER_TREE_TYPE = 2;
+export const SEED_LE = SUNFLOWER_SAPPLING_LE * 100;
+export const LE_TO_PVU_TAX = 0.05;

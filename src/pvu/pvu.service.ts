@@ -5,9 +5,18 @@ import { FarmResponse } from './interfaces/farm_response.interfaces';
 import { map } from 'rxjs/operators';
 import { CoinMarketResponse } from './constants/coin_market';
 import { FarmStatsResponse } from './interfaces/farm_stats_response.interface';
-import { FutureFarm } from './interfaces/farm.interfaces';
+import { FutureFarm, PlantCalculation } from './interfaces/farm.interfaces';
 import { DateTime, Interval } from 'luxon';
-import { LE_TO_PVU, PVU_TO_SEED } from './constants/pvu.constant';
+import {
+  LE_TO_PVU,
+  LE_TO_PVU_TAX,
+  MOTHER_TREE_TYPE,
+  POT_LE,
+  PVU_TO_SEED,
+  SEED_LE,
+  SUNFLOWER_MAMA_LE,
+  SUNFLOWER_SAPPLING_LE,
+} from './constants/pvu.constant';
 import { farmStatsStub, farmStub } from './stubs/api.stub';
 
 const buildRequest = (token: string) => ({
@@ -23,14 +32,38 @@ const buildRequest = (token: string) => ({
 });
 
 const calculateLE = (isSunflower: boolean, type: number, le: number) => {
-  if (isSunflower && type === 2) {
-    return le - 250;
+  if (isSunflower && type === MOTHER_TREE_TYPE) {
+    return le - SUNFLOWER_MAMA_LE - POT_LE;
   } else if (isSunflower) {
-    return le - 150;
+    return le - SUNFLOWER_SAPPLING_LE - POT_LE;
   } else {
     return le;
   }
 };
+
+const fullDayInHours = (hours: number) => hours % 24 === 0;
+
+const calculateHours =
+  (plants: PlantCalculation[], actualLE: number) =>
+  (leNeeded = SEED_LE) => {
+    let totalLEHarvested = actualLE;
+    let hoursPassed = 0;
+    while (totalLEHarvested <= leNeeded) {
+      plants.forEach((plant) => {
+        const hours =
+          plant.harvestTimes === 1 ? plant.actualHours : plant.hours;
+        if (hoursPassed === hours * plant.harvestTimes) {
+          totalLEHarvested += plant.le;
+          plant.harvestTimes++;
+        }
+      });
+      if (fullDayInHours(hoursPassed)) {
+        totalLEHarvested += SUNFLOWER_SAPPLING_LE * 4;
+      }
+      hoursPassed++;
+    }
+    return hoursPassed;
+  };
 
 @Injectable()
 export class PvuService {
@@ -81,7 +114,7 @@ export class PvuService {
 
   calculateFarmStats(
     farm: FarmResponse,
-    farmStats: FarmStatsResponse,
+    { data: { leWallet, usagesSunflower } }: FarmStatsResponse,
   ): FutureFarm {
     const plants = farm.data.map((plant) => {
       const startTime = DateTime.fromISO(plant.startTime);
@@ -95,26 +128,16 @@ export class PvuService {
           : Math.ceil(actualHours.length('hours')),
       };
     });
-    let totalLEHarvested =
-      farmStats.data.leWallet + farmStats.data.usagesSunflower * 100;
-    const leToSeed = 10000 + LE_TO_PVU * PVU_TO_SEED * 1.05;
-    let hoursPassed = 0;
-    while (totalLEHarvested <= leToSeed) {
-      plants.forEach((plant) => {
-        const hours =
-          plant.harvestTimes === 1 ? plant.actualHours : plant.hours;
-        if (hoursPassed === hours * plant.harvestTimes) {
-          totalLEHarvested += plant.le;
-          plant.harvestTimes++;
-        }
-      });
-      hoursPassed++;
-    }
+    const actualLE = leWallet + usagesSunflower * SUNFLOWER_SAPPLING_LE;
+    const functionToCalculateWith = calculateHours(plants, actualLE);
+    const leToSeed = SEED_LE + LE_TO_PVU * PVU_TO_SEED * (1 + LE_TO_PVU_TAX);
+    const hoursIncludingPVU = functionToCalculateWith(leToSeed);
+    const hoursNotIncludingPVU = functionToCalculateWith();
     return {
-      currentLE: farmStats.data.leWallet,
-      currentSunflower: farmStats.data.usagesSunflower,
-      stimatedDays: Math.floor(hoursPassed / 24),
-      stimatedHours: hoursPassed,
+      currentLE: leWallet,
+      currentSunflower: usagesSunflower,
+      stimatedHoursIncludingPVU: hoursIncludingPVU,
+      stimatedHoursNotIncludingPVU: hoursNotIncludingPVU,
     };
   }
 }

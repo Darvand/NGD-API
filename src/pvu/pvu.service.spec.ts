@@ -25,10 +25,10 @@ describe('PvuService', () => {
   describe('calculateFarmStats', () => {
     it('should return 0', () => {
       const expectedStat: FutureFarm = {
-        stimatedDays: 9,
-        stimatedHours: 217,
-        currentLE: 0,
-        currentSunflower: 0,
+        stimatedHoursIncludingPVU: 106,
+        stimatedHoursNotIncludingPVU: 49,
+        currentLE: 5272,
+        currentSunflower: 36,
       };
       const stat = service.calculateFarmStats(
         farmHarvestableStub,
