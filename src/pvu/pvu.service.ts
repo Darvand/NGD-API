@@ -48,8 +48,9 @@ const calculateHours =
   (leNeeded = SEED_LE) => {
     let totalLEHarvested = actualLE;
     let hoursPassed = 0;
+    const plantsCalculation = plants.map((plant) => ({ ...plant }));
     while (totalLEHarvested <= leNeeded) {
-      plants.forEach((plant) => {
+      plantsCalculation.forEach((plant) => {
         const hours =
           plant.harvestTimes === 1 ? plant.actualHours : plant.hours;
         if (hoursPassed === hours * plant.harvestTimes) {
